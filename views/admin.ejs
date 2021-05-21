@@ -1,18 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel</title>
 </head>
+
 <body>
     <h1>Adminski Panel</h1>
+ <form action="../add/user" method="post">
+  <input type="text" name="username" placeholder="username">
+  <br>
+  <input type="text" name="password" placeholder="password">
+ <br>
+ <button type="submit">Dodaj novog Usera</button>
+</form>
+<br>
+    <table>
+        <% for(let i=0;i<users.length;i++){ %>
+
+
+            <tr>
+                <td>
+                   username: <%= users[i].username %>
+                </td>
+                <td>
+                   password: <%= users[i].password %>
+                </td>
+                <td>
+                    <button data-id=<%= users[i].id %>  class="delete-button">Obrisi</button>
+                </td>
+            </tr>
 
 
 
+            <% } %>
+        </table>
 
-    <script>
-    </script>
+
+        <script src="./adminScript.js" ></script> 
 </body>
+
 </html>
