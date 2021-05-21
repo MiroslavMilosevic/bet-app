@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Login BET-APP</title>
+</head>
+
+<body>
+    <h1>bla bla login page</h1>
+
+    <form action="../login" method="post">
+        <input type="text" name="username" id="username">
+        <input type="text" name="password" id="password">
+        <input type="submit">
+        <p>
+            <%= message %>
+        </p>
+      
+    </form>
+<button id="dugme1">Dugme 1</button>
+    <script>
+let dugme1 = document.getElementById('dugme1');
+dugme1.addEventListener('click', function(){
+    console.log('ajdee');
+   axios.post('../myfetch').then(res=>{
+       console.log(res.data);
+    })
+
+})
+    </script>
+</body>
+
+</html>
