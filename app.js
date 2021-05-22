@@ -1,9 +1,12 @@
 const express = require('express');
-const session = require('express-session')
+const session = require('express-session');
 const app = express();
 const mongoose = require('mongoose');
 const loginMongoDB = require('./db/loginDB');
 const getAllUsersMongoDB = require('./db/allUsersDB');
+const addUserMongoDB = require('./db/addUserDB');
+const deleteUser = require('./db/deleteUserDB');
+// var bodyParser = require('body-parser')
 // const User = require('./db/user');
 app.set('view engine', 'ejs');
 
@@ -59,13 +62,28 @@ app.get('/admin', async (req, res) => {
   if(req.session.username!=undefined){
     let users = await getAllUsersMongoDB();
 
-       console.log(users);
+     //  console.log(users);
     res.render('admin', {users:users})
     }else{
       res.redirect("/login")
     }
-//
 })
+app.post('/add/user', async(req, res)=>{
+  //console.log(req.body);
+      let usersAfterSave = await addUserMongoDB(req.body.username, req.body.password, req.body.description)
+           res.redirect('/admin');
+})
+app.post('/user/delete', async(req, res)=>{
+     let deleteUserResponse = await deleteUser(req.body.id);
+   //  console.log(deleteUserResponse);
+      
+     res.redirect('/admin')
+  //console.log(req.body);
+ //res.send('<h3>Ovo je response</h3>')
+
+})
+
+
 //
 app.use((req, res)=>{
   if(req.session.username==undefined){

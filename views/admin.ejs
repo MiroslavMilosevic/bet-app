@@ -5,15 +5,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>Admin Panel</title>
 </head>
 
 <body>
     <h1>Adminski Panel</h1>
  <form action="../add/user" method="post">
-  <input type="text" name="username" placeholder="username">
+  <input type="text" name="username" placeholder="username" required>
   <br>
-  <input type="text" name="password" placeholder="password">
+  <input type="text" name="password" placeholder="password" required>
+ <br>
+ <input type="text" name="description" placeholder="opis" required>
  <br>
  <button type="submit">Dodaj novog Usera</button>
 </form>
@@ -30,7 +33,12 @@
                    password: <%= users[i].password %>
                 </td>
                 <td>
-                    <button data-id=<%= users[i].id %>  class="delete-button">Obrisi</button>
+                    Dodat: <%= users[i].createdAt.toString().split('GMT')[0] %>
+                 </td>
+                <td>
+                  <form action="../user/delete" method="POST">  
+                    <button value=<%= users[i].id %>  name="id" type="submit" data-id=<%= users[i].id %>  class="delete-button">Obrisi</button>
+                </form>
                 </td>
             </tr>
 
