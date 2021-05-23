@@ -11,6 +11,39 @@
 
 <body>
     <h1>Adminski Panel</h1>
+
+
+<form action="../add/tekma" method="POST">
+<input type="text" name="tim1" placeholder="tim1" required><br>
+<input type="text" name="tim2" placeholder="tim2" required><br>
+<input type="text" name="kvota" placeholder="kvota" required><br>
+<input type="text" name="liga" placeholder="liga" required><br>
+<select name="game" id="game"><br>
+<option value="Draw">Draw</option>
+<option value="Over 0.5">Over 0.5</option>
+<option value="Under 0.5">Under 0.5</option>
+<option value="Over 1.5">Over 1.5</option>
+<option value="Under 1.5">Under 1.5</option>
+</select>
+<br>
+<select name="sport" id="sport">
+    <option value="tennis">tennis</option>
+    <option value="soccer">soccer</option>
+    <option value="basketball">basketball</option>
+    <option value="other">other</option>
+</select><br>
+<label for="">Datum pocetka:</label>
+<input type="text" name="dateToStart" placeholder="2021-07-25 12:25:05" required minlength="19" maxlength="19"><br>
+<label for="">Datum Kraja</label>
+<input type="text" name="dateToEnd" placeholder="2021-07-25 07:00:00" required minlength="19" maxlength="19"><br>
+
+<button type="submit">Postavi Utakmicu</button>
+
+</form>
+
+
+<!-- dfsdfasdfs dasffffffffffffffffffffffffffffffffkjaskljdfaskljdhfadkjdhasfkljdhasfkjldasfkjadsfassdhfdkashfkjdhasfdjasfkljhafasfkljh -->
+<br>
  <form action="../add/user" method="post">
   <input type="text" name="username" placeholder="username" required>
   <br>
@@ -23,7 +56,6 @@
 <br>
     <table>
         <% for(let i=0;i<users.length;i++){ %>
-
 
             <tr>
                 <td>
