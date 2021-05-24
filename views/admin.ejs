@@ -13,74 +13,147 @@
     <h1>Adminski Panel</h1>
 
 
-<form action="../add/tekma" method="POST">
-<input type="text" name="tim1" placeholder="tim1" required><br>
-<input type="text" name="tim2" placeholder="tim2" required><br>
-<input type="text" name="kvota" placeholder="kvota" required><br>
-<input type="text" name="liga" placeholder="liga" required><br>
-<select name="game" id="game"><br>
-<option value="Draw">Draw</option>
-<option value="Over 0.5">Over 0.5</option>
-<option value="Under 0.5">Under 0.5</option>
-<option value="Over 1.5">Over 1.5</option>
-<option value="Under 1.5">Under 1.5</option>
-</select>
-<br>
-<select name="sport" id="sport">
-    <option value="tennis">tennis</option>
-    <option value="soccer">soccer</option>
-    <option value="basketball">basketball</option>
-    <option value="other">other</option>
-</select><br>
-<label for="">Datum pocetka:</label>
-<input type="text" name="dateToStart" placeholder="2021-07-25 12:25:05" required minlength="19" maxlength="19"><br>
-<label for="">Datum Kraja</label>
-<input type="text" name="dateToEnd" placeholder="2021-07-25 07:00:00" required minlength="19" maxlength="19"><br>
+    <form action="../add/tekma" method="POST">
+        <input type="text" name="tim1" placeholder="tim1" required><br>
+        <input type="text" name="tim2" placeholder="tim2" required><br>
+        <input type="text" name="kvota" placeholder="kvota" required><br>
+        <input type="text" name="liga" placeholder="liga" required><br>
+        <select name="game" id="game"><br>
+            <option value="Draw">Draw</option>
+            <option value="Over 0.5">Over 0.5</option>
+            <option value="Under 0.5">Under 0.5</option>
+            <option value="Over 1.5">Over 1.5</option>
+            <option value="Under 1.5">Under 1.5</option>
+        </select>
+        <br>
+        <select name="sport" id="sport">
+            <option value="tennis">tennis</option>
+            <option value="soccer">soccer</option>
+            <option value="basketball">basketball</option>
+            <option value="other">other</option>
+        </select><br>
+        <label for="">Datum pocetka:</label>
+        <input type="text" name="dateToStart" placeholder="2021-07-25 12:25:05" required minlength="19"
+            maxlength="19"><br>
+        <label for="">Datum Kraja</label>
+        <input type="text" name="dateToEnd" placeholder="2021-07-25 07:00:00" required minlength="19"
+            maxlength="19"><br>
 
-<button type="submit">Postavi Utakmicu</button>
+        <button type="submit">Postavi Utakmicu</button>
 
-</form>
-
-
-<!-- dfsdfasdfs dasffffffffffffffffffffffffffffffffkjaskljdfaskljdhfadkjdhasfkljdhasfkjldasfkjadsfassdhfdkashfkjdhasfdjasfkljhafasfkljh -->
-<br>
- <form action="../add/user" method="post">
-  <input type="text" name="username" placeholder="username" required>
-  <br>
-  <input type="text" name="password" placeholder="password" required>
- <br>
- <input type="text" name="description" placeholder="opis" required>
- <br>
- <button type="submit">Dodaj novog Usera</button>
-</form>
-<br>
-    <table>
-        <% for(let i=0;i<users.length;i++){ %>
+    </form>
+    <br>
+    <table class="table-tekme" id="tabelaTekme">
+        <% for(let i=0; i<tekme.length; i++){ %>
 
             <tr>
                 <td>
-                   username: <%= users[i].username %>
+                    <%= tekme[i].tim1 %>
                 </td>
                 <td>
-                   password: <%= users[i].password %>
+                    <%= tekme[i].tim2%>
                 </td>
                 <td>
-                    Dodat: <%= users[i].createdAt.toString().split('GMT')[0] %>
-                 </td>
+                    <%= tekme[i].kvota%>
+                </td>
                 <td>
-                  <form action="../user/delete" method="POST">  
-                    <button value=<%= users[i].id %>  name="id" type="submit" data-id=<%= users[i].id %>  class="delete-button">Obrisi</button>
-                </form>
+                    <%= tekme[i].liga%>
+                </td>
+                <td>
+                    <%= tekme[i].game%>
+                </td>
+                <td>
+                    <form action="../delete/tekma" method="POST">
+                        <button type="submit" name="id" value=<%=tekme[i].id %> >obrisi</button>
+                    </form>
                 </td>
             </tr>
 
-
-
             <% } %>
+    </table>
+    <p>
+        <%= tekme.length %>
+    </p>
+    <br>
+    <!-- adsfkjadls;fjdjasfkljasdfkljasdlfjasdfjadjlakjskasdkdfkldjasfl;adjsofirueotguerwotgudklsfjaskljadsfkljasadjladjsfkljaslfjdas -->
+    <% removed_tekme=removed_tekme.filter(el=>el.dalijeproslo == 'neodluceno') %>
+        <table>
+            <% for(let i=0; i<removed_tekme.length; i++){ %>
+
+                <tr>
+                    <td>
+                        <%= removed_tekme[i].removed_tim1 %>
+                    </td>
+                    <td>
+                        <%= removed_tekme[i].removed_tim2 %>
+                    </td>
+                    <td>
+                        <%= removed_tekme[i].removed_liga %>
+                    </td>
+                    <td>
+                        <form action="#">
+                            <button type="submit">Proslo</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="#">
+                            <button type="submit">Nije</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="#">
+                            <button type="submit">Obrisi</button>
+                        </form>
+                    </td>
+                </tr>
+
+                <% } %>
+        </table>
+        <p>
+            <%= removed_tekme.length %> dfaskjadlasdfkj
+        </p>
+
+
+        <!-- dfsdfasdfs dasffffffffffffffffffffffffffffffffkjaskljdfaskljdhfadkjdhasfkljdhasfkjldasfkjadsfassdhfdkashfkjdhasfdjasfkljhafasfkljh -->
+        <br>
+        <form action="../add/user" method="post">
+            <input type="text" name="username" placeholder="username" required>
+            <br>
+            <input type="text" name="password" placeholder="password" required>
+            <br>
+            <input type="text" name="description" placeholder="opis" required>
+            <br>
+            <button type="submit">Dodaj novog Usera</button>
+        </form>
+        <br>
+        <table>
+            <% for(let i=0;i<users.length;i++){ %>
+
+                <tr>
+                    <td>
+                        username: <%= users[i].username %>
+                    </td>
+                    <td>
+                        password: <%= users[i].password %>
+                    </td>
+                    <td>
+                        Dodat: <%= users[i].createdAt.toString().split('GMT')[0] %>
+                    </td>
+                    <td>
+                        <form action="../user/delete" method="POST">
+                            <button value=<%=users[i].id %> name="id" type="submit" data-id=<%= users[i].id %>
+                                    class="delete-button">Obrisi</button>
+                        </form>
+                    </td>
+                </tr>
+
+
+
+                <% } %>
         </table>
 
 
-        <script src="./adminScript.js" ></script> 
+        <script src="./adminScript.js"></script>
 </body>
 
 </html>

@@ -7,7 +7,7 @@ async function getAllUsersMongoDB(){
     let dateAdded = user0.createdAt.toString();
   //  console.log(dateAdded);
   let array = dateAdded.split('GMT');
-////console.log(array);
+///console.log(array);
 
     return users;
 }

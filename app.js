@@ -7,6 +7,9 @@ const getAllUsersMongoDB = require('./db/allUsersDB');
 const addUserMongoDB = require('./db/addUserDB');
 const deleteUser = require('./db/deleteUserDB');
 const addTekmaMongoDB = require('./db/addTekmaDB');
+const getAllTekmasMongoDB = require('./db/allTekmeDB');
+const deleteTekmaMongoDB = require('./db/deleteTekmaDB');
+const getAllRemovedTekmeMongoDB = require('./db/allRemovedTekmeDB');
 // var bodyParser = require('body-parser')
 // const User = require('./db/user');
 app.set('view engine', 'ejs');
@@ -20,7 +23,6 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true }).the
   console.log('error hapened');
 });
 
-
 ////app.use
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'));
@@ -30,7 +32,6 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }))
-
 
 app.get('/login', (req, res) => {
   if(req.session.username==undefined){
@@ -62,24 +63,10 @@ app.get('/home', (req, res) => {
 app.get('/admin', async (req, res) => {
   if(req.session.username == "pero1" && req.session.password == "pero@123"){
     let users = await getAllUsersMongoDB();
-    let date = new Date("2021-05-19 17:00:50");
-      console.log(users[0]);
-      // console.log(users[0].createdAt, date);
-      // console.log(users[0].createdAt > date);
-      // console.log(users[0].createdAt < date);
-    //   console.log("2021-05-19 17:00:50" == "2021-05-19 17:00:50" );
-    //   console.log("2022-05-19 17:00:50" > "2021-05-19 17:00:50" );
-    //   console.log("2022-05-19 17:00:50" == "2021-05-19 17:00:50" );
-    //  date+="";
-      //  console.log(date);
-      //  console.log(date.toString());
-
-      
-
-    //  console.log(date);
-    
-     //  console.log(users);
-    res.render('admin', {users:users})
+    let tekmas = await getAllTekmasMongoDB();
+    let removed_tekmas = await getAllRemovedTekmeMongoDB();
+   // let date = new Date("2021-05-19 17:00:50");
+    res.render('admin', {users:users, tekme:tekmas, removed_tekme:removed_tekmas})
     }
     else if(req.session.username != undefined && req.session.password != undefined){
       res.redirect("/home")
@@ -108,13 +95,24 @@ app.post('/user/delete', async(req, res)=>{
 })
 app.post('/add/tekma', async (req, res)=>{
   if(req.session.username != undefined && req.session.password != undefined){
-    let radiMolimTe = await addTekmaMongoDB(req.body);
-    res.send("<p>Stradasf;laskfjld;asfasdfjkas;ldf</p>")
+    let responseAddTekma = await addTekmaMongoDB(req.body);
+       res.redirect('/admin')
    }else{
     res.redirect("/login")
-   }
-      
+   }   
 });
+app.post('/delete/tekma', async (req, res)=>{
+  if(req.session.username != undefined && req.session.password != undefined){
+           console.log('delete/tekma pogodjennnnnnnnnnnnnnnnnnnnnn');
+          let deleteTekmaResponse = await deleteTekmaMongoDB(req.body.id);
+          console.log(deleteTekmaResponse);
+           res.redirect('/admin')
+   }else{
+    res.redirect("/login")
+   }   
+});
+
+///delete/tekma
 
 //
 app.use((req, res)=>{
