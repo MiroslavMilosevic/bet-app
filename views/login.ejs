@@ -13,24 +13,24 @@
     <h1>bla bla login page</h1>
 
     <form action="../login" method="post">
-        <input type="text" name="username" id="username">
-        <input type="text" name="password" id="password">
+        <input type="text" name="username" id="username" required>
+        <input type="text" name="password" id="password" required>
         <input type="submit">
         <p>
             <%= message %>
         </p>
       
     </form>
-<button id="dugme1">Dugme 1</button>
+<!-- <button id="dugme1">Dugme 1</button> -->
     <script>
-let dugme1 = document.getElementById('dugme1');
-dugme1.addEventListener('click', function(){
-    console.log('ajdee');
-   axios.post('../ppp').then(res=>{
-       console.log(res.data);
-    })
+// let dugme1 = document.getElementById('dugme1');
+// dugme1.addEventListener('click', function(){
+//     console.log('ajdee');
+//    axios.post('../ppp').then(res=>{
+//        console.log(res.data);
+//     })
 
-})
+// })
     </script>
 </body>
 

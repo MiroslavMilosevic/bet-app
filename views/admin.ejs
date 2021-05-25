@@ -79,6 +79,7 @@
     <!-- adsfkjadls;fjdjasfkljasdfkljasdlfjasdfjadjlakjskasdkdfkldjasfl;adjsofirueotguerwotgudklsfjaskljadsfkljasadjladjsfkljaslfjdas -->
 
     <h2>Obrisane utakmice</h2>
+  <p>  <%= removed_tekme.length %> </p>
     <% removed_tekme=removed_tekme.filter(el=>el.dalijeproslo == 'neodluceno') %>
         <table id="table-dalije-proslo">
             <% for(let i=0; i<removed_tekme.length; i++){ %>
@@ -99,13 +100,13 @@
                         </form>
                     </td>
                     <td>
-                        <form action="#">
-                            <button type="submit">Nije</button>
+                        <form action="../nije" method="POST">
+                            <button type="submit" name="id" value=<%= removed_tekme[i].id %> >Nije</button>
                         </form>
                     </td>
                     <td>
-                        <form action="#">
-                            <button type="submit">Obrisi</button>
+                        <form action="../delete/removed" method="POST">
+                            <button type="submit" name="id" value=<%= removed_tekme[i].id %> >Obrisi</button>
                         </form>
                     </td>
                 </tr>

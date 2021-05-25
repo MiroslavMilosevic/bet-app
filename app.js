@@ -40,16 +40,16 @@ app.use(session({
 // })
 
 app.get('/login', (req, res) => {
-  if(req.session.username==undefined){
-  res.render('login', { message: "", })
-  }else{
+  if (req.session.username == undefined) {
+    res.render('login', { message: "", })
+  } else {
     res.redirect("/home")
   }
 });
 app.post('/login', async (req, res) => {
 
   let loginData = await loginMongoDB(req.body.username, req.body.password);
-  if (loginData != null && req.body.username == loginData.username && req.body.password == loginData.password ) {
+  if (loginData != null && req.body.username == loginData.username && req.body.password == loginData.password) {
     req.session.username = loginData.username;
     req.session.password = loginData.password;
     res.redirect('/home');
@@ -59,7 +59,7 @@ app.post('/login', async (req, res) => {
 });
 
 app.get('/home', (req, res) => {
-   if (req.session.username != undefined && req.session.password != undefined) {
+  if (req.session.username != undefined && req.session.password != undefined) {
     res.render('home', { username: req.session.username })
   } else {
     res.redirect('/login')
@@ -67,70 +67,79 @@ app.get('/home', (req, res) => {
 });
 
 app.get('/admin', async (req, res) => {
-  if(req.session.username == "pero1" && req.session.password == "pero@123"){
+  if (req.session.username == "pero1" && req.session.password == "pero@123") {
     let users = await getAllUsersMongoDB();
     let tekmas = await getAllTekmasMongoDB();
     let removed_tekmas = await getAllRemovedTekmeMongoDB();
-   // let date = new Date("2021-05-19 17:00:50");
-    res.render('admin', {users:users, tekme:tekmas, removed_tekme:removed_tekmas})
-    }
-    else if(req.session.username != undefined && req.session.password != undefined){
-      res.redirect("/home")
-     } else{
-      res.redirect("/login")
-    }
+    // let date = new Date("2021-05-19 17:00:50");
+    res.render('admin', { users: users, tekme: tekmas, removed_tekme: removed_tekmas })
+  }
+  else if (req.session.username != undefined && req.session.password != undefined) {
+    res.redirect("/home")
+  } else {
+    res.redirect("/login")
+  }
 })
-app.post('/add/user', async(req, res)=>{
-   if(req.session.username != undefined && req.session.password != undefined){
+app.post('/add/user', async (req, res) => {
+  if (req.session.username != undefined && req.session.password != undefined) {
     let usersAfterSave = await addUserMongoDB(req.body.username, req.body.password, req.body.description)
     res.redirect('/admin');
-   }else{
+  } else {
     res.redirect("/login")
-   }
+  }
 
-    
+
 })
-app.post('/user/delete', async(req, res)=>{
-  if(req.session.username != undefined && req.session.password != undefined){
-    let deleteUserResponse = await deleteUser(req.body.id);  
+app.post('/user/delete', async (req, res) => {
+  if (req.session.username != undefined && req.session.password != undefined) {
+    let deleteUserResponse = await deleteUser(req.body.id);
     res.redirect('/admin')
-   }else{
+  } else {
     res.redirect("/login")
-   }
+  }
 
 })
-app.post('/add/tekma', async (req, res)=>{
-  if(req.session.username != undefined && req.session.password != undefined){
+app.post('/add/tekma', async (req, res) => {
+  if (req.session.username != undefined && req.session.password != undefined) {
     let responseAddTekma = await addTekmaMongoDB(req.body);
-       res.redirect('/admin')
-   }else{
+    res.redirect('/admin')
+  } else {
     res.redirect("/login")
-   }   
+  }
 });
-app.post('/delete/tekma', async (req, res)=>{
-  if(req.session.username != undefined && req.session.password != undefined){
-           console.log('delete/tekma pogodjennnnnnnnnnnnnnnnnnnnnn');
-          let deleteTekmaResponse = await deleteTekmaMongoDB(req.body.id);
-          console.log(deleteTekmaResponse);
-           res.redirect('/admin')
-   }else{
+app.post('/delete/tekma', async (req, res) => {
+  if (req.session.username != undefined && req.session.password != undefined) {
+    console.log('delete/tekma pogodjennnnnnnnnnnnnnnnnnnnnn');
+    let deleteTekmaResponse = await deleteTekmaMongoDB(req.body.id);
+    console.log(deleteTekmaResponse);
+    res.redirect('/admin')
+  } else {
     res.redirect("/login")
-   }   
+  }
 });
 ///delete/tekma
-app.get('/logout', (req, res)=>{
+app.get('/logout', (req, res) => {
   req.session.destroy();
   res.redirect('/login')
 });
 
-app.post('/proslo',async(req,res)=>{daLiJeProsloDB.prosloMongoDB(req.body.id); res.redirect('/admin') });
+app.post('/proslo', async (req, res) => {
+  let response = await daLiJeProsloDB.prosloMongoDB(req.body.id); res.redirect('/admin')
+});
+app.post('/nije', async (req, res) => {
+  let response = await daLiJeProsloDB.nijeMongoDB(req.body.id); res.redirect('/admin')
+});
+app.post('/delete/removed', async (req, res) => {
+  let response = await daLiJeProsloDB.obrisiRemovedTekmuMongoDB(req.body.id); res.redirect('/admin')
+});
+
 
 //
-app.use((req, res)=>{
-  if(req.session.username==undefined){
+app.use((req, res) => {
+  if (req.session.username == undefined) {
     res.redirect('/login')
-    }else{
-      res.redirect("/home")
-    }
+  } else {
+    res.redirect("/home")
+  }
 })
 
