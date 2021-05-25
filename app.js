@@ -10,6 +10,7 @@ const addTekmaMongoDB = require('./db/addTekmaDB');
 const getAllTekmasMongoDB = require('./db/allTekmeDB');
 const deleteTekmaMongoDB = require('./db/deleteTekmaDB');
 const getAllRemovedTekmeMongoDB = require('./db/allRemovedTekmeDB');
+const daLiJeProsloDB = require('./db/daLiJeProsloDB');
 // var bodyParser = require('body-parser')
 // const User = require('./db/user');
 app.set('view engine', 'ejs');
@@ -32,6 +33,11 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }))
+
+// app.use((req,res)=>{
+//   console.log(req.session.username, '>>>>>>>>>>>>>>>>>?"":LHDHFKSHFJSDKFDKS');
+//   req.next()
+// })
 
 app.get('/login', (req, res) => {
   if(req.session.username==undefined){
@@ -111,8 +117,13 @@ app.post('/delete/tekma', async (req, res)=>{
     res.redirect("/login")
    }   
 });
-
 ///delete/tekma
+app.get('/logout', (req, res)=>{
+  req.session.destroy();
+  res.redirect('/login')
+});
+
+app.post('/proslo',async(req,res)=>{daLiJeProsloDB.prosloMongoDB(req.body.id); res.redirect('/admin') });
 
 //
 app.use((req, res)=>{

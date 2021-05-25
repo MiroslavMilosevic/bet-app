@@ -6,14 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="admin.css">
     <title>Admin Panel</title>
 </head>
 
 <body>
+     <a href="../logout"><div id="log-out">Log out</div></a>
+     <a href="../home"><div id="go-to-home">Home stranica</div></a>
     <h1>Adminski Panel</h1>
 
 
-    <form action="../add/tekma" method="POST">
+    <form action="../add/tekma" method="POST" id="forma-add-tekma">
         <input type="text" name="tim1" placeholder="tim1" required><br>
         <input type="text" name="tim2" placeholder="tim2" required><br>
         <input type="text" name="kvota" placeholder="kvota" required><br>
@@ -71,13 +74,13 @@
 
             <% } %>
     </table>
-    <p>
-        <%= tekme.length %>
-    </p>
+
     <br>
     <!-- adsfkjadls;fjdjasfkljasdfkljasdlfjasdfjadjlakjskasdkdfkldjasfl;adjsofirueotguerwotgudklsfjaskljadsfkljasadjladjsfkljaslfjdas -->
+
+    <h2>Obrisane utakmice</h2>
     <% removed_tekme=removed_tekme.filter(el=>el.dalijeproslo == 'neodluceno') %>
-        <table>
+        <table id="table-dalije-proslo">
             <% for(let i=0; i<removed_tekme.length; i++){ %>
 
                 <tr>
@@ -91,8 +94,8 @@
                         <%= removed_tekme[i].removed_liga %>
                     </td>
                     <td>
-                        <form action="#">
-                            <button type="submit">Proslo</button>
+                        <form action="../proslo" method="POST">
+                            <button type="submit" name="id" value=<%= removed_tekme[i].id %> >Proslo</button>
                         </form>
                     </td>
                     <td>
@@ -109,24 +112,23 @@
 
                 <% } %>
         </table>
-        <p>
-            <%= removed_tekme.length %> dfaskjadlasdfkj
-        </p>
+
 
 
         <!-- dfsdfasdfs dasffffffffffffffffffffffffffffffffkjaskljdfaskljdhfadkjdhasfkljdhasfkjldasfkjadsfassdhfdkashfkjdhasfdjasfkljhafasfkljh -->
-        <br>
+        <h3>unos novog usera</h3>
+
         <form action="../add/user" method="post">
-            <input type="text" name="username" placeholder="username" required>
+            <input type="text" name="username" placeholder="username" required maxlength="10">
             <br>
-            <input type="text" name="password" placeholder="password" required>
+            <input type="text" name="password" placeholder="password" required maxlength="12">
             <br>
             <input type="text" name="description" placeholder="opis" required>
             <br>
             <button type="submit">Dodaj novog Usera</button>
         </form>
         <br>
-        <table>
+        <table id="table-users">
             <% for(let i=0;i<users.length;i++){ %>
 
                 <tr>
