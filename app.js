@@ -18,7 +18,7 @@ app.set('view engine', 'ejs');
 const dbURI = 'mongodb+srv://user1:12345@mycluster.dc55z.mongodb.net/first-base?retryWrites=true&w=majority'
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true }).then(res => {
   console.log('connected')
-  app.listen(3000, () => { console.log("listening at port 3000"); })
+  app.listen(process.env.PORT || 3000, () => { console.log("listening at port 3000"); })
 
 }).catch(err => {
   console.log('error hapened');
